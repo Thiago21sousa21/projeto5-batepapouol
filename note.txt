@@ -1,0 +1,2 @@
+exite diferença entre propriedade e função
+ahh como fazer um comando que verifica se uma string faz parte de outraa?

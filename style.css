@@ -1,0 +1,59 @@
+*{
+    box-sizing: border-box;
+}
+div{
+    /*
+    border: 1px solid black;
+    */
+}
+body{
+    background-color: #e5e5e5;
+}
+.container{
+    width: 375px;
+    height: 650px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+.header,
+.footer{
+    width: 100%;
+    height: 80px;
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+}
+.header {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+}
+.ctChat{
+    height: 490px;
+    background-color: #f3f3f3;
+    margin: auto 0;
+}
+input{
+    width: 285px;
+    height: 30px;
+}
+.iconePeople{
+    font-size: 42px;
+}
+.iconePaper{
+    font-size: 26px;
+ 
+}

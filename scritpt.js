@@ -1,12 +1,36 @@
-const user = prompt('Escolha um nome de usuario:');
-const tdsMensagens = [];
+axios.defaults.headers.common['Authorization'] = 'DQqHRAxotNHnS6S76x3rXZZE';
+
+const user = {
+    name: ''
+};
+function respostaEnvioNome(resposta){
+    console.log(resposta);
+
+}
+function erroEnvioNome(deuErrado){
+    console.log(deuErrado);
+    loopEntrada();
+}
+
+function loopEntrada(){
+    user.name = prompt('Escolha um nome de usuario:');
+    let promessa1 = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants ', user);
+    promessa1.then(respostaEnvioNome);
+    promessa1.catch(erroEnvioNome);
+}
+
+loopEntrada();
+
+const listaMensagens = [];
 let valorInput;
-let mostrarTdsMensagens = document.querySelector('ul');
+let renderizarMensagens = document.querySelector('ul');
 
 function pegaImput(){
     valorInput = document.querySelector('input').value;
-    console.log(valorInput);
 }
+
+
+
 const arrayMomentoEnvio = [];
 function pegaHora(){
     let agora = new Date();
@@ -17,19 +41,41 @@ function pegaHora(){
     arrayMomentoEnvio.push(momentoEnvio);
 }
 
+function respostaEnvio(resposta){
+    console.log(resposta);
+
+}
+function erroEnvio(deuErrado){
+    console.log(deuErrado);
+}
+
+
+
 function clicaEnvia(){
     pegaImput();
     pegaHora();
 
-    let novaMensagem = {remetente: '', destinatario: '', conteudo:''};
-    novaMensagem.conteudo = valorInput;
-    tdsMensagens.push(novaMensagem);
+    let novaMensagem = {
+        from: '', 
+        to: '', 
+        text:'',
+        type: ''
+        };
+    novaMensagem.text = valorInput;
+    novaMensagem.from = user.name;
+    listaMensagens.push(novaMensagem);
 
-    mostrarTdsMensagens.innerHTML = '';
-    for(let i =0 ; i < tdsMensagens.length ; i++){
-        mostrarTdsMensagens.innerHTML += 
+    
+    const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages',novaMensagem);
+    promessa.then(respostaEnvio);
+    promessa.catch(erroEnvio);
+    
+
+    renderizarMensagens.innerHTML = '';
+    for(let i =0 ; i < listaMensagens.length ; i++){
+        renderizarMensagens.innerHTML += 
             `<li>
-                <strong class="negritoFraco cinza">${arrayMomentoEnvio[i]}</strong> <strong class="negritoForte">${user}:</strong> <strong class="negritoFraco preto">${tdsMensagens[i].conteudo}</strong>
+                <strong class="negritoFraco cinza">${arrayMomentoEnvio[i]}</strong> <strong class="negritoForte">${user}:</strong> <strong class="negritoFraco preto">${listaMensagens[i].text}</strong>
             </li>
             `;
     }

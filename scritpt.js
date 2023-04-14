@@ -3,23 +3,50 @@ axios.defaults.headers.common['Authorization'] = 'DQqHRAxotNHnS6S76x3rXZZE';
 const user = {
     name: ''
 };
-function respostaEnvioNome(resposta){
-    console.log(resposta);
 
-}
-function erroEnvioNome(deuErrado){
-    console.log(deuErrado);
-    loopEntrada();
-}
+
 
 function loopEntrada(){
+
+    function respostaEnvioNome(resposta){
+        console.log(resposta);
+    
+    }
+    function erroEnvioNome(deuErrado){
+        console.log(deuErrado);
+        loopEntrada();
+    }
+
     user.name = prompt('Escolha um nome de usuario:');
     let promessa1 = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants ', user);
     promessa1.then(respostaEnvioNome);
     promessa1.catch(erroEnvioNome);
+
+
+
 }
 
 loopEntrada();
+
+function verificarOnline(){
+
+    function respostaOciosidade(reposta){
+        /*console.log(reposta);*/
+    }
+    function erroOciosidade(erro){
+        console.log(erro);
+    }
+
+    let promessa2 = axios.post('https://mock-api.driven.com.br/api/vm/uol/status', user);
+    promessa2.then(respostaOciosidade)
+    promessa2.catch(erroOciosidade)
+
+}
+const stopKey = setInterval(verificarOnline, 5000);
+function pararVerificar(){
+    clearInterval(stopKey);
+}
+
 
 const listaMensagens = [];
 let valorInput;
@@ -41,15 +68,31 @@ function pegaHora(){
     arrayMomentoEnvio.push(momentoEnvio);
 }
 
-function respostaEnvio(resposta){
-    console.log(resposta);
+function funcRenderizarMensagens(){
+    renderizarMensagens.innerHTML = '';
+    for(let i =0 ; i < dadosServidor.length ; i++){
+        renderizarMensagens.innerHTML += 
+            `<li>
+                <strong class="negritoFraco cinza">${dadosServidor.time[i]}</strong> <strong class="negritoForte">${dadosServidor.from[i]}:</strong> <strong class="negritoFraco preto">${dadosServidor.text[i]}</strong>
+            </li>
+            `;
+    }
+}
+let dadosServidor;
+function resPromsssaServidor(resposta){
+    dadosServidor = resposta.data;
+    console.log(dadosServidor);
+
+    funcRenderizarMensagens();
 
 }
-function erroEnvio(deuErrado){
-    console.log(deuErrado);
+function resErroServidor(deuErrado){
+    alert('deuErrado');
 }
 
-
+let promessaServidor = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
+promessaServidor.then(resPromsssaServidor);
+promessaServidor.catch(resErroServidor); 
 
 function clicaEnvia(){
     pegaImput();
@@ -57,25 +100,25 @@ function clicaEnvia(){
 
     let novaMensagem = {
         from: '', 
-        to: '', 
+        to: 'Todos', 
         text:'',
-        type: ''
+        type: 'message'
         };
     novaMensagem.text = valorInput;
     novaMensagem.from = user.name;
     listaMensagens.push(novaMensagem);
 
     
-    const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages',novaMensagem);
+    const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', novaMensagem);
     promessa.then(respostaEnvio);
     promessa.catch(erroEnvio);
     
 
     renderizarMensagens.innerHTML = '';
-    for(let i =0 ; i < listaMensagens.length ; i++){
+    for(let i =0 ; i < dadosServidor.length ; i++){
         renderizarMensagens.innerHTML += 
             `<li>
-                <strong class="negritoFraco cinza">${arrayMomentoEnvio[i]}</strong> <strong class="negritoForte">${user}:</strong> <strong class="negritoFraco preto">${listaMensagens[i].text}</strong>
+                <strong class="negritoFraco cinza">${dadosServidor.time[i]}</strong> <strong class="negritoForte">${dadosServidor.from[i]}:</strong> <strong class="negritoFraco preto">${dadosServidor.text[i]}</strong>
             </li>
             `;
     }

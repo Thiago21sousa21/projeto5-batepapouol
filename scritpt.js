@@ -26,7 +26,14 @@ function loopEntrada(){
 
 }
 
+
+
 loopEntrada();
+puxaDados();
+const keyPuxaDados = setInterval(puxaDados, 3000);
+function stopPuxaDados() {
+    clearInterval(keyPuxaDados);
+}    
 
 function verificarOnline(){
 
@@ -42,9 +49,9 @@ function verificarOnline(){
     promessa2.catch(erroOciosidade)
 
 }
-const stopKey = setInterval(verificarOnline, 5000);
-function pararVerificar(){
-    clearInterval(stopKey);
+const keyVerificarOnline = setInterval(verificarOnline, 5000);
+function stopVerificarOnline(){
+    clearInterval(keyVerificarOnline);
 }
 
 
@@ -73,7 +80,7 @@ function funcRenderizarMensagens(){
     for(let i =0 ; i < dadosServidor.length ; i++){
         renderizarMensagens.innerHTML += 
             `<li>
-                <strong class="negritoFraco cinza">${dadosServidor.time[i]}</strong> <strong class="negritoForte">${dadosServidor.from[i]}:</strong> <strong class="negritoFraco preto">${dadosServidor.text[i]}</strong>
+                <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from}:</strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
             </li>
             `;
     }
@@ -81,18 +88,18 @@ function funcRenderizarMensagens(){
 let dadosServidor;
 function resPromsssaServidor(resposta){
     dadosServidor = resposta.data;
-    console.log(dadosServidor);
-
     funcRenderizarMensagens();
-
 }
+
 function resErroServidor(deuErrado){
     alert('deuErrado');
 }
 
-let promessaServidor = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
-promessaServidor.then(resPromsssaServidor);
-promessaServidor.catch(resErroServidor); 
+function puxaDados(){
+    let promessaServidor = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
+    promessaServidor.then(resPromsssaServidor);
+    promessaServidor.catch(resErroServidor); 
+}
 
 function clicaEnvia(){
     pegaImput();
@@ -108,18 +115,17 @@ function clicaEnvia(){
     novaMensagem.from = user.name;
     listaMensagens.push(novaMensagem);
 
-    
-    const promessa = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', novaMensagem);
-    promessa.then(respostaEnvio);
-    promessa.catch(erroEnvio);
+    function repostaPromessa0(){
+        puxaDados();
+    }
+    function erroResposta0(erro){
+        alert('erro');
+        console.log(erro);
+    }
+    const promessa0 = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', novaMensagem);
+    promessa0.then(repostaPromessa0);
+    promessa0.catch(erroResposta0);
     
 
-    renderizarMensagens.innerHTML = '';
-    for(let i =0 ; i < dadosServidor.length ; i++){
-        renderizarMensagens.innerHTML += 
-            `<li>
-                <strong class="negritoFraco cinza">${dadosServidor.time[i]}</strong> <strong class="negritoForte">${dadosServidor.from[i]}:</strong> <strong class="negritoFraco preto">${dadosServidor.text[i]}</strong>
-            </li>
-            `;
-    }
+
 }

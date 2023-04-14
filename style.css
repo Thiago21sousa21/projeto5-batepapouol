@@ -87,3 +87,15 @@ input{
 .preto{
     color: #000000;
 }
+.tipoMessage{
+    background-color: #FFFFFF;
+
+}
+.tipoStatus{
+    background-color: #DCDCDC;
+
+}
+.tipoPrivate{
+    background-color: #FFDEDE;
+
+}

@@ -52,6 +52,7 @@ function verificarOnline(){
 const keyVerificarOnline = setInterval(verificarOnline, 5000);
 function stopVerificarOnline(){
     clearInterval(keyVerificarOnline);
+    stopPuxaDados();
 }
 
 
@@ -59,13 +60,9 @@ const listaMensagens = [];
 let valorInput;
 let renderizarMensagens = document.querySelector('ul');
 
-function pegaImput(){
-    valorInput = document.querySelector('input').value;
-}
 
 
-
-const arrayMomentoEnvio = [];
+/*const arrayMomentoEnvio = [];
 function pegaHora(){
     let agora = new Date();
     let horas = agora.getHours();
@@ -73,19 +70,35 @@ function pegaHora(){
     let segundos = agora.getSeconds();
     let momentoEnvio = `(${horas}:${minutos}:${segundos})`;
     arrayMomentoEnvio.push(momentoEnvio);
-}
+}*/
+let dadosServidor;
 
 function funcRenderizarMensagens(){
     renderizarMensagens.innerHTML = '';
     for(let i =0 ; i < dadosServidor.length ; i++){
-        renderizarMensagens.innerHTML += 
-            `<li>
-                <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from}:</strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
-            </li>
-            `;
+        if( dadosServidor[i].type == 'status'){
+            renderizarMensagens.innerHTML += `
+                                                <li class="tipoStatus">
+                                                    <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
+                                                </li>
+                                            `;
+        }
+        else if( dadosServidor[i].type == 'message'){
+            renderizarMensagens.innerHTML += `
+                                                <li class="tipoMessage">
+                                                    <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong><span>para </span><strong class="negritoForte">${dadosServidor[i].to}: </strong><strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
+                                                </li>
+                                            `;
+        }
+        else if( dadosServidor[i].type == 'private_message'){
+            renderizarMensagens.innerHTML += `
+                                                <li class="tipoPrivate">
+                                                    <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong> <span>reservadamente para </span><strong class="negritoForte">${dadosServidor[i].to}: </strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
+                                                </li>
+                                            `;
+        }
     }
 }
-let dadosServidor;
 function resPromsssaServidor(resposta){
     dadosServidor = resposta.data;
     funcRenderizarMensagens();
@@ -102,8 +115,9 @@ function puxaDados(){
 }
 
 function clicaEnvia(){
-    pegaImput();
-    pegaHora();
+    /*pegaHora();*/
+    valorInput = document.querySelector('input').value;
+
 
     let novaMensagem = {
         from: '', 
@@ -125,6 +139,9 @@ function clicaEnvia(){
     const promessa0 = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', novaMensagem);
     promessa0.then(repostaPromessa0);
     promessa0.catch(erroResposta0);
+
+    valorInput = '';
+    
     
 
 

@@ -78,21 +78,21 @@ function funcRenderizarMensagens(){
     for(let i =0 ; i < dadosServidor.length ; i++){
         if( dadosServidor[i].type == 'status'){
             renderizarMensagens.innerHTML += `
-                                                <li class="tipoStatus">
+                                                <li data-test="message" class="tipoStatus">
                                                     <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
                                                 </li>
                                             `;
         }
         else if( dadosServidor[i].type == 'message'){
             renderizarMensagens.innerHTML += `
-                                                <li class="tipoMessage">
+                                                <li data-test="message" class="tipoMessage">
                                                     <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong><span>para </span><strong class="negritoForte">${dadosServidor[i].to}: </strong><strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
                                                 </li>
                                             `;
         }
         else if( dadosServidor[i].type == 'private_message'){
             renderizarMensagens.innerHTML += `
-                                                <li class="tipoPrivate">
+                                                <li data-test="message" class="tipoPrivate">
                                                     <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong> <span>reservadamente para </span><strong class="negritoForte">${dadosServidor[i].to}: </strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
                                                 </li>
                                             `;

@@ -92,10 +92,14 @@ function funcRenderizarMensagens(){
         }
         else if( dadosServidor[i].type == 'private_message'){
             renderizarMensagens.innerHTML += `
-                                                <li data-test="message" class="tipoPrivate">
+                                                <li data-test="message" class="tipoPrivate hidden">
                                                     <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong> <span>reservadamente para </span><strong class="negritoForte">${dadosServidor[i].to}: </strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
                                                 </li>
                                             `;
+            if(dadosServidor[i].to == user.name){
+                let cadaEnvio = document.querySelectorAll('li');
+                cadaEnvio[i].classList.remove('hidden');
+            }
         }
     }
 }

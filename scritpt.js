@@ -26,10 +26,7 @@ function loopEntrada(){
         promessa1.then(respostaEnvioNome);
         promessa1.catch(erroEnvioNome);
 
-
 }
-
-
 
 loopEntrada();
 puxaDados();
@@ -99,7 +96,7 @@ function funcRenderizarMensagens(){
                                                     <strong class="negritoFraco cinza">(${dadosServidor[i].time})</strong> <strong class="negritoForte">${dadosServidor[i].from} </strong> <span>reservadamente para </span><strong class="negritoForte">${dadosServidor[i].to}: </strong> <strong class="negritoFraco preto">${dadosServidor[i].text}</strong>
                                                 </li>
                                             `;
-            if(dadosServidor[i].to == user.name){
+            if(dadosServidor[i].to == user.name || dadosServidor[i].from == user.name){
                 let cadaEnvio = document.querySelectorAll('li');
                 cadaEnvio[i].classList.remove('hidden');
             }

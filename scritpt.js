@@ -12,22 +12,22 @@ while(user.name == '' || user.name == null){
 
 
 function loopEntrada(){
-        function respostaEnvioNome(resposta){
-            console.log(resposta);
-            console.log('nome cadastrado com sucesso!');
-        
-        }
-        function erroEnvioNome(deuErrado){
-            console.log(deuErrado);
-            loopEntrada();
-        }
+    function respostaEnvioNome(resposta){
+        console.log(resposta);
+        console.log('nome cadastrado com sucesso!');
+    
+    }
+    function erroEnvioNome(deuErrado){
+        console.log(deuErrado);
+        user.name = prompt('Escolha um nome de usuario:');
 
-        let promessa1 = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants ', user);
-        promessa1.then(respostaEnvioNome);
-        promessa1.catch(erroEnvioNome);
+        loopEntrada();
+    }
+    let promessa1 = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants ', user);
+    promessa1.then(respostaEnvioNome);
+    promessa1.catch(erroEnvioNome);
 
 }
-
 loopEntrada();
 puxaDados();
 const keyPuxaDados = setInterval(puxaDados, 3000);

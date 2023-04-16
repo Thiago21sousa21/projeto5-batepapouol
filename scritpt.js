@@ -4,24 +4,27 @@ const user = {
     name: ''
 };
 
+while(user.name == '' || user.name == null){
+    user.name = prompt('Escolha um nome de usuario:');
+    console.log(user.name);
+
+}
 
 
 function loopEntrada(){
+        function respostaEnvioNome(resposta){
+            console.log(resposta);
+            console.log('nome cadastrado com sucesso!');
+        
+        }
+        function erroEnvioNome(deuErrado){
+            console.log(deuErrado);
+            loopEntrada();
+        }
 
-    function respostaEnvioNome(resposta){
-        console.log(resposta);
-    
-    }
-    function erroEnvioNome(deuErrado){
-        console.log(deuErrado);
-        loopEntrada();
-    }
-
-    user.name = prompt('Escolha um nome de usuario:');
-    let promessa1 = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants ', user);
-    promessa1.then(respostaEnvioNome);
-    promessa1.catch(erroEnvioNome);
-
+        let promessa1 = axios.post('https://mock-api.driven.com.br/api/vm/uol/participants ', user);
+        promessa1.then(respostaEnvioNome);
+        promessa1.catch(erroEnvioNome);
 
 
 }

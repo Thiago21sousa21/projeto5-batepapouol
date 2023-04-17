@@ -10,11 +10,14 @@ while(user.name == '' || user.name == null){
 
 }
 
-
+let acesso = 0;
 function loopEntrada(){
     function respostaEnvioNome(resposta){
         console.log(resposta);
         console.log('nome cadastrado com sucesso!');
+        acesso = 1;
+        puxaDados();
+                 
     
     }
     function erroEnvioNome(deuErrado){
@@ -33,7 +36,6 @@ function loopEntrada(){
 
 
 loopEntrada();
-puxaDados();
 const keyPuxaDados = setInterval(puxaDados, 3000);
 function stopPuxaDados() {
     clearInterval(keyPuxaDados);
@@ -117,9 +119,12 @@ function resErroServidor(deuErrado){
 }
 
 function puxaDados(){
-    let promessaServidor = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
-    promessaServidor.then(resPromsssaServidor);
-    promessaServidor.catch(resErroServidor); 
+    if(acesso == 1){
+        let promessaServidor = axios.get('https://mock-api.driven.com.br/api/vm/uol/messages');
+        promessaServidor.then(resPromsssaServidor);
+        promessaServidor.catch(resErroServidor); 
+
+    }
 }
 
 function clicaEnvia(){

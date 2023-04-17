@@ -48,6 +48,9 @@ function verificarOnline(){
     }
     function erroOciosidade(erro){
         console.log(erro);
+        window.location.reload();
+
+
     }
 
     let promessa2 = axios.post('https://mock-api.driven.com.br/api/vm/uol/status', user);

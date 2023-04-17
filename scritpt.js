@@ -115,7 +115,9 @@ function resPromsssaServidor(resposta){
 }
 
 function resErroServidor(deuErrado){
-    alert('deuErrado');
+    alert('erro ao carregar mensagens');
+    window.location.reload();
+
 }
 
 function puxaDados(){
@@ -148,9 +150,9 @@ function clicaEnvia(){
         puxaDados();
     }
     function erroResposta0(erro){
-        alert('erro');
+        alert('erro ao enviar mensagem');
         console.log(erro);
-        window.location.reload()
+        window.location.reload();
     }
     const promessa0 = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', novaMensagem);
     promessa0.then(repostaPromessa0);

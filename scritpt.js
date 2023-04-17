@@ -28,6 +28,10 @@ function loopEntrada(){
     promessa1.catch(erroEnvioNome);
 
 }
+
+
+
+
 loopEntrada();
 puxaDados();
 const keyPuxaDados = setInterval(puxaDados, 3000);
@@ -120,7 +124,9 @@ function puxaDados(){
 
 function clicaEnvia(){
     /*pegaHora();*/
-    valorInput = document.querySelector('input').value;
+    tagInput = document.querySelector('input');
+
+    valorInput = tagInput.value;
 
 
     let novaMensagem = {
@@ -139,14 +145,22 @@ function clicaEnvia(){
     function erroResposta0(erro){
         alert('erro');
         console.log(erro);
+        window.location.reload()
     }
     const promessa0 = axios.post('https://mock-api.driven.com.br/api/vm/uol/messages', novaMensagem);
     promessa0.then(repostaPromessa0);
     promessa0.catch(erroResposta0);
 
-    valorInput = '';
+    tagInput.value = '';
     
     
 
 
 }
+
+function enviarEnter(event) {
+    if (event.keyCode === 13) {
+      clicaEnvia();
+    }
+  }
+  

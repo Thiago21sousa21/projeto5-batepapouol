@@ -1,4 +1,4 @@
-axios.defaults.headers.common['Authorization'] = 'DQqHRAxotNHnS6S76x3rXZZE';
+axios.defaults.headers.common['Authorization'] = 'aTbqbZrZrkTYLYdrTktudg1i';
 
 const user = {
     name: ''
